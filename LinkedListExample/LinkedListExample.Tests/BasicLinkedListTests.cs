@@ -78,5 +78,18 @@ namespace LinkedListExample.Tests
             Assert.AreEqual("{5, 9}", ill.ToString());
         }
 
+        [TestMethod]
+        public void TestAlternateMerge()
+        {
+            var ill = new IntegerLinkedList(1);
+            ill.Append(2);
+            ill.Append(3);
+            var ill2 = new IntegerLinkedList(4);
+            ill2.Append(5);
+            ill2.Append(6);
+            ill2.Append(7);
+            IntegerLinkedList ill3 = ill.AlternateMerge(ill2);
+            Assert.AreEqual("{1, 4, 2, 5, 3, 6, 7}", ill3.ToString());
+        }
     }
 }

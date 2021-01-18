@@ -108,23 +108,26 @@ namespace LinkedListExample.Lib
         {
             return _head.CountOccurences(0, v);
         }
-
-        public void AlternateMerge(IntegerLinkedList ill2)
+        
+        public IntegerLinkedList AlternateMerge(IntegerLinkedList ill2)
         {
-            if (ill2._head == null)
+            if(_head == null)
             {
-                 //nothing to add so do nothing
+                return ill2;
             }
-            else if(_head == null)   //list1 is null and list2 is not null
+            else if(ill2._head == null)
             {
-                _head = ill2._head;
+                return this;
             }
             else
             {
-               
+                IntegerLinkedList newList = new IntegerLinkedList(_head.Value);
+                newList.Append(ill2._head.Value);
+                newList = _head.AlternateMerge(newList, ill2._head);
+                return newList;
             }
-        }
 
+        }
         public override string ToString()
         {
             string listStr = "{";
@@ -150,7 +153,9 @@ namespace LinkedListExample.Lib
         }
 
         public IntegerNode Next
-        { get { return _next; } }
+        { get { return _next; }
+          set { _next = value; }
+        }
         public int Value
         { get { return _value; } }
 
@@ -247,6 +252,33 @@ namespace LinkedListExample.Lib
                 else
                     return _next.CountOccurences(count, v);
 
+            }
+        }
+
+        public IntegerLinkedList AlternateMerge(IntegerLinkedList newList, IntegerNode node2)
+        {
+            if(_next == null)
+            {
+                if (node2._next == null)  //if both reached end
+                {
+                    return newList;
+                }
+                else
+                {
+                    newList.Append(node2._next._value);
+                    return this.AlternateMerge(newList, node2._next);
+                }
+            }
+            else if(node2._next == null)
+            {
+                newList.Append(_next._value);
+                return _next.AlternateMerge(newList, node2);
+            }
+            else
+            {
+                newList.Append(_next._value);
+                newList.Append(node2._next._value);
+                return _next.AlternateMerge(newList, node2._next);
             }
         }
     }
