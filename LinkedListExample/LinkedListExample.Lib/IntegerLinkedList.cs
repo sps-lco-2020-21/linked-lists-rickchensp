@@ -79,7 +79,11 @@ namespace LinkedListExample.Lib
             }
             else
             {
-                return _head.Delete(v);
+                if (_head.Value == v)  //if the first node is the value
+                {
+                    _head = _head.Next;
+                }
+                return _head.Delete(v);                
             }
         }
 
@@ -117,7 +121,7 @@ namespace LinkedListExample.Lib
             }
             else
             {
-                _head.AlternateMerge(ill2._head);
+               
             }
         }
 
@@ -127,7 +131,7 @@ namespace LinkedListExample.Lib
             IntegerNode currentNode = _head;
             while (currentNode != null)
             {
-                listStr = listStr + currentNode.ToString().Trim(new char[] { '{' ,'}' }) + ", ";
+                listStr = listStr + currentNode.ToString() + ", ";
                 currentNode = currentNode.Next;
             }
             listStr = listStr.Substring(0, listStr.Length - 2) + "}"; //remove the last group of ", " and add the close bracket
@@ -225,7 +229,7 @@ namespace LinkedListExample.Lib
 
         public override string ToString()
         {
-            return "{" + Convert.ToString(_value) + "}";
+            return Convert.ToString(_value);
         }
 
         public int CountOccurences(int count, int v)
@@ -243,22 +247,6 @@ namespace LinkedListExample.Lib
                 else
                     return _next.CountOccurences(count, v);
 
-            }
-        }
-
-        public IntegerNode AlternateMerge(IntegerNode node2)
-        {
-            if (node2._next == null)
-            {
-                return this;
-            }
-            else if(_next == null)
-            {
-                return node2;
-            }
-            else
-            {
-                return _next = _next.AlternateMerge(node2._next);
             }
         }
     }
